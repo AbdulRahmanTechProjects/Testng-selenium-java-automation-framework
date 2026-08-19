@@ -1,6 +1,7 @@
 package tests;
-import utils.ExcelReader;
-import utils.ScreenshotUtil;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.LoginPage;
@@ -10,11 +11,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import utils.ScreenshotUtil;
+
 import java.time.Duration;
-
-public class LoginTest {
+public class ProductTest{
     WebDriver driver;
-
     @BeforeTest
     public void setup() {
         WebDriverManager.chromedriver().setup();
@@ -25,33 +26,41 @@ public class LoginTest {
     }
 
     @Test
-    public void loginAndAddToCart() {
+    public void DropdownTest(){
         LoginPage loginPage = new LoginPage(driver);
-        String beforePath = ScreenshotUtil.captureScreenshot(driver, "BeforeLogin");
-        System.out.println("Screenshot saved at: " + beforePath);
         loginPage.login("standard_user", "secret_sauce");
-        String afterPath = ScreenshotUtil.captureScreenshot(driver, "AfterLogin");
-        System.out.println("Screenshot saved at: " + afterPath);
         ScreenshotUtil.captureScreenshot(driver, "AfterLogin");
         ProductsPage productsPage = new ProductsPage(driver);
         System.out.println(productsPage.getTitleText());
         Assert.assertEquals(productsPage.getTitleText(),"Products");
-
+        System.out.println(productsPage.getSelectedOption());
+        ScreenshotUtil.captureScreenshot(driver, "BeforeSelectingDropdownOption");
+        System.out.println(productsPage.getSortOptionCount());
+        productsPage.setSort("Price (low to high)");
+        ScreenshotUtil.captureScreenshot(driver, "AfterSelectingDropdownOption");
+        System.out.println(productsPage.getSelectedOption());
+        ScreenshotUtil.captureScreenshot(driver, "BeforeAddingBackPackToCart");
         productsPage.addBackpackToCart();
+        ScreenshotUtil.captureScreenshot(driver, "BeforeAddingBackPackToCart");
         Assert.assertEquals(productsPage.getCartCount(), "1");
-
         System.out.println("POM test passed - cart shows: " + productsPage.getCartCount());
-    }
 
+    }
     @Test
-    public void readExcelTest() {
-        String path = System.getProperty("user.dir") + "/DataFiles/Input_testdata.xlsx";
-        ExcelReader.readTestData(path, "Sheet1");
+    public void navigationTest(){
+        driver.navigate().refresh();
+        System.out.println("Refresh successful");
+        driver.navigate().to("https://saucelabs.com/");
+        driver.navigate().back();
+        System.out.println(driver.getCurrentUrl());
+        driver.navigate().forward();
+        System.out.println(driver.getCurrentUrl());
     }
 
     @AfterTest
     public void tearDown() {
         driver.quit();
     }
-}
 
+
+}
