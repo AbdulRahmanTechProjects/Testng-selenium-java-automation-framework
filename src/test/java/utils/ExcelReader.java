@@ -24,7 +24,7 @@ public class ExcelReader {
             // 4. Loop through every row
             for (Row row : sheet) {
                 // 5. Loop through every cell in the row
-                for (Cell cell : row) {
+                for (Cell cell  : row) {
                     // print each cell's value (as text)
                     System.out.print(cell.toString() + "\t");
                 }
@@ -38,5 +38,25 @@ public class ExcelReader {
         } catch (IOException e) {
             System.out.println("Error reading Excel: " + e.getMessage());
         }
+    }
+    // returns the value of ONE cell as a String (row and column are 0-based)
+    public static String getCellData(String filePath, String sheetName, int rowNum, int colNum) {
+        String value = "";
+        try {
+            FileInputStream file = new FileInputStream(filePath);
+            Workbook workbook = new XSSFWorkbook(file);
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            Row row = sheet.getRow(rowNum);
+            Cell cell = row.getCell(colNum);
+
+            value = cell.toString();   // toString handles both text and numbers
+
+            workbook.close();
+            file.close();
+        } catch (IOException e) {
+            System.out.println("Error reading cell: " + e.getMessage());
+        }
+        return value;
     }
 }
