@@ -48,7 +48,11 @@ public class LoginTest {
         String path = System.getProperty("user.dir") + "/DataFiles/Input_testdata.xlsx";
         ExcelReader.readTestData(path, "Sheet1");
     }
-
+    @Test
+    public void testCellRead() {
+        String path = System.getProperty("user.dir") + "/DataFiles/Input_testdata.xlsx";
+        System.out.println(ExcelReader.getCellData(path, "Sheet1", 1, 1));  // should print "Login with credentials"
+    }
     @AfterTest
     public void tearDown() {
         driver.quit();
