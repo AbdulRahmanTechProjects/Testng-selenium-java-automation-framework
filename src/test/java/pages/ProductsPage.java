@@ -17,6 +17,8 @@ public class ProductsPage {
     By addBackpackButton = By.id("add-to-cart-sauce-labs-backpack");
     By sortDropdown = By.className("product_sort_container");
     By bpRemoveButton = By.cssSelector("#remove-sauce-labs-backpack");
+    By menuButton = By.id("react-burger-menu-btn");
+    By logoutLink = By.id("logout_sidebar_link");
 
     // Constructor
     public ProductsPage(WebDriver driver) {
@@ -30,6 +32,15 @@ public class ProductsPage {
 
     public void addBackpackToCart() {
         driver.findElement(addBackpackButton).click();
+    }
+
+    public void clickProductTitle() {
+        driver.findElement(productTitle).click();
+    }
+
+    public void logout() {
+        driver.findElement(menuButton).click();
+        driver.findElement(logoutLink).click();
     }
 
 
