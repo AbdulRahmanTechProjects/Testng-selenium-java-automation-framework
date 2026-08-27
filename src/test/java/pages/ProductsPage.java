@@ -34,6 +34,10 @@ public class ProductsPage {
         driver.findElement(addBackpackButton).click();
     }
 
+    public void removeBackpackFromCart() {
+        driver.findElement(bpRemoveButton).click();
+    }
+
     public void clickProductTitle() {
         driver.findElement(productTitle).click();
     }
@@ -54,10 +58,6 @@ public class ProductsPage {
         return select.getFirstSelectedOption().getText();
     }
 
-    public void clickRemoveButton(){
-        WebElement bpRemoveButton = driver.findElement(By.cssSelector("#remove-sauce-labs-backpack"));
-        bpRemoveButton.click();
-    }
 
     public int getSortOptionCount(){
         Select select = new Select(driver.findElement(sortDropdown));

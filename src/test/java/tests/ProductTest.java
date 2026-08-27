@@ -1,6 +1,7 @@
 package tests;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -44,6 +45,9 @@ public class ProductTest{
         ScreenshotUtil.captureScreenshot(driver, "BeforeAddingBackPackToCart");
         Assert.assertEquals(productsPage.getCartCount(), "1");
         System.out.println("POM test passed - cart shows: " + productsPage.getCartCount());
+        productsPage.removeBackpackFromCart();
+        ScreenshotUtil.captureScreenshot(driver, "BeforeAddingBackPackToCart");
+
 
     }
     @Test
